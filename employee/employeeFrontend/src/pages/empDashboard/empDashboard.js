@@ -96,7 +96,7 @@ const EmployeeDashboard = ({ filterText, userData }) => {
       let response;
       if (editMode) {
         response = await axios.put(
-          `https://inventory-app-employee.onrender.com/updateProduct/${currentProduct._id}`,
+          `https://localhost:3003/updateProduct/${currentProduct._id}`,
           updatedFormData
         );
         setAppliedProducts(
@@ -106,7 +106,7 @@ const EmployeeDashboard = ({ filterText, userData }) => {
         );
       } else {
         response = await axios.post(
-          "https://inventory-app-employee.onrender.com/applyProduct",
+          "https://localhost:3003/applyProduct",
           updatedFormData
         );
         setAppliedProducts([...appliedProducts, response.data]);
