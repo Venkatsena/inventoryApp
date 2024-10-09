@@ -20,7 +20,7 @@ const EmployeeDashboard = ({ filterText, userData }) => {
     const employeeId = window.localStorage.getItem("employeeId");
     try {
       const response = await axios.get(
-        `https://employeeapp-shov.onrender.com/appliedProducts/${employeeId}`
+        `http://localhost:3003/appliedProducts/${employeeId}`
       );
       if (response.status === 200) {
         setAppliedProducts(response.data);
@@ -143,7 +143,7 @@ const EmployeeDashboard = ({ filterText, userData }) => {
     }
 
     try {
-      await axios.delete(`https://employeeapp-shov.onrender.com/deleteProduct/${id}`);
+      await axios.delete(`http://localhost:3003/deleteProduct/${id}`);
       setAppliedProducts(
         appliedProducts.filter((product) => product._id !== id)
       );
