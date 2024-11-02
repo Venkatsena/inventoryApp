@@ -197,7 +197,7 @@ const canEditOrDelete = async (req, res, next) => {
     res.status(500).json({ error: "Server Error" });
   }
 };
-app.put("/updateProduct/:id", canEditOrDelete, async (req, res) => {
+app.put("/updateProduct/:id",  async (req, res) => {
   const { id } = req.params;
   const { employeeId, employeeName, productName, quantity } = req.body;
   
@@ -252,7 +252,7 @@ app.put('/appliedProducts/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to update product status' });
   }
 });
-app.delete("/deleteProduct/:id", canEditOrDelete, async (req, res) => {
+app.delete("/deleteProduct/:id", async (req, res) => {
   const { id } = req.params;
   
   try {

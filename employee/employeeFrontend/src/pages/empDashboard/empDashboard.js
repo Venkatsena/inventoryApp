@@ -118,13 +118,13 @@ const EmployeeDashboard = ({ filterText, userData }) => {
   };
 
   const handleEdit = (product) => {
-    const timeSinceApplied = new Date() - new Date(product.date);
-    if (timeSinceApplied > TIME_LIMIT) {
-      setTimeError(
-        "You cannot edit this product after 25 minutes of application."
-      );
-      return;
-    }
+    // const timeSinceApplied = new Date() - new Date(product.date);
+    // if (timeSinceApplied > TIME_LIMIT) {
+    //   setTimeError(
+    //     "You cannot edit this product after 25 minutes of application."
+    //   );
+    //   return;
+    // }
 
     setCurrentProduct(product);
     setEditMode(true);
@@ -134,13 +134,13 @@ const EmployeeDashboard = ({ filterText, userData }) => {
 
   const handleDelete = async (id) => {
     const product = appliedProducts.find((p) => p._id === id);
-    const timeSinceApplied = new Date() - new Date(product.date);
-    if (timeSinceApplied > TIME_LIMIT) {
-      setTimeError(
-        "You cannot delete this product after 25 minutes of application."
-      );
-      return;
-    }
+    // const timeSinceApplied = new Date() - new Date(product.date);
+    // if (timeSinceApplied > TIME_LIMIT) {
+    //   setTimeError(
+    //     "You cannot delete this product after 25 minutes of application."
+    //   );
+    //   return;
+    // }
 
     try {
       await axios.delete(`http://localhost:3003/deleteProduct/${id}`);

@@ -48,7 +48,6 @@ const EmpLogin = () => {
 
     return valid;
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!validateForm()) return;
@@ -59,34 +58,29 @@ const EmpLogin = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email,password }),
+        body: JSON.stringify({ email, password }),
       });
+
       const data = await response.json();
 
       if (data.status === 'ok') {
-        // Check if the entered password matches the one stored in the admin database
-        if (data.employee.password === password) {
-          // Store necessary employee data in local storage
-          window.localStorage.setItem('employeeId', data.employee.employeeId);
-          window.localStorage.setItem('email', data.employee.email);
-          window.localStorage.setItem('name', data.employee.employeeName);
-              window.localStorage.setItem('token',data.token)
-          console.log("login:",data, data.token)
-          console.log(data.employee.employeeName,"name")
+        // Store necessary employee data in local storage
+        window.localStorage.setItem('employeeId', data.employee.employeeId);
+        window.localStorage.setItem('email', data.employee.email);
+        window.localStorage.setItem('token', data.token);
 
-          // Redirect to dashboard
-          navigate("/layout/dashboard");
-        } else {
-          alert("Incorrect password. Please try again.");
-        }
+        // Redirect to dashboard
+        navigate("/layout/dashboard");
       } else {
-        alert("Employee not found. Please check your email.");
+        // Check for specific error messages from the server
+        alert(data.message === "Incorrect password" ? "Incorrect password. Please try again." : "Employee not found. Please check your email.");
       }
     } catch (error) {
       console.error("Error logging in:", error);
       alert("An error occurred while logging in. Please try again.");
     }
   };
+
 
   return (
     <div className="container-fluid signup-cont d-flex align-items-center justify-content-center vh-100 p-5">
