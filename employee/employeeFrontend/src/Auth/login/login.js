@@ -48,6 +48,7 @@ const EmpLogin = () => {
 
     return valid;
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!validateForm()) return;
@@ -58,22 +59,30 @@ const EmpLogin = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email,password }),
       });
-
       const data = await response.json();
 
       if (data.status === 'ok') {
-        // Store necessary employee data in local storage
-        window.localStorage.setItem('employeeId', data.employee.employeeId);
-        window.localStorage.setItem('email', data.employee.email);
-        window.localStorage.setItem('token', data.token);
+        // Check if the entered password matches the one stored in the admin database
+        if (data.employee.password === password) {
+          // Store necessary employee data in local storage
+          window.localStorage.setItem('employeeId', data.employee.employeeId);
+          window.localStorage.setItem('email', data.employee.email);
+           window.localStorage.setItem('token', data.token);
+      
+           const token= window.localStorage.getItem('token', data.token);
+       
+        console.log(token, "refresh token"); 
 
-        // Redirect to dashboard
-        navigate("/layout/dashboard");
+           console.log(token,"token")
+          // Redirect to dashboard
+          navigate("/layout/dashboard");
+        }else {
+          alert("Incorrect password. Please try again.");
+        }
       } else {
-        // Check for specific error messages from the server
-        alert(data.message === "Incorrect password" ? "Incorrect password. Please try again." : "Employee not found. Please check your email.");
+        alert("Employee not found. Please check your email.");
       }
     } catch (error) {
       console.error("Error logging in:", error);
@@ -81,9 +90,8 @@ const EmpLogin = () => {
     }
   };
 
-
   return (
-    <div className="container-fluid signup-cont d-flex align-items-center justify-content-center vh-100 p-5">
+    <div className="container-fluid signup-cont d-flex align-items-center justify-content-center vh-100 ">
       <div className="row justify-content-center w-100">
         <div className="col-lg-11 d-flex justify-content-center align-items-center">
           <div className="form-container d-flex flex-column flex-md-row bg-white shadow-sm rounded-5 w-100">

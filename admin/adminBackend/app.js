@@ -276,39 +276,38 @@ app.post('/validateEmployee', async (req, res) => {
 // });
 emp_secret="sedrcfvgbhjne7fstfyegbh5hrwygbtruiygbhutierghwgeu5tbui4wiehtuebrteh"
 
-app.post("/getEmployeeDetails", async (req, res) => {
-  const { email, password } = req.body;
+
+
+
+app.post('/getEmployeeDetails', async (req, res) => {
+  const { email} = req.body;
 
   try {
-    const employee = await Employee.findOne({ email });
+      const employee = await Employee.findOne({ email });
 
-    if (!employee) {
-      return res.status(404).json({ message: "Employee not found" });
-    }
-
-    // Direct password comparison
-    if (password === employee.password) {
-      const token = jwt.sign({ employeeId: employee.employeeId }, emp_secret, {
-        expiresIn: "2h",
-      });
+      if (!employee) {
+          return res.status(404).json({ message: 'Employee not found' });
+      }
+      const token = jwt.sign({ employeeId: employee.employeeId },emp_secret, {
+                      expiresIn: "2h",
+                  });
 
       res.status(200).json({
-        status: "ok",
-        token,
-        employee: {
-          email: employee.email,
-          employeeId: employee.employeeId,
-          employeeName: employee.name,
-          token: token,
-        },
+          status: 'ok',
+          token,
+          employee: {
+              email: employee.email,
+              password: employee.password,
+              employeeId: employee.employeeId,
+              employeeName:employee.name
+          },
       });
-    } else {
-      return res.status(401).json({ message: "Incorrect password" });
-    }
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+      res.status(500).json({ message: 'Server error', error });
   }
 });
+
+
 
 // emp_secret="sedrcfvgbhjne7fstfyegbh5hrwygbtruiygbhutierghwgeu5tbui4wiehtuebrteh"
 // app.post('/getEmployeeDetails', async (req, res) => {
