@@ -289,7 +289,7 @@ app.post('/getEmployeeDetails', async (req, res) => {
           return res.status(404).json({ message: 'Employee not found' });
       }
       const token = jwt.sign({ employeeId: employee.employeeId },emp_secret, {
-                      expiresIn: "2h",
+                      expiresIn: "3d",
                   });
 
       res.status(200).json({
